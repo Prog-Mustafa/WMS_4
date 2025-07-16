@@ -235,6 +235,22 @@ const pageRoutes = [
     ],
   },
   {
+    name: "wms",
+    columns: 3,
+    rowsPerColumn: 3,
+    collapse: [
+      { name: "items", route: "/wms/items" },
+      { name: "purchase orders", route: "/wms/purchase-orders" },
+      { name: "sales orders", route: "/wms/sales-orders" },
+      { name: "receiving", route: "/wms/receiving" },
+      { name: "deliveries", route: "/wms/deliveries" },
+      { name: "transfers", route: "/wms/transfers" },
+      { name: "cycle counts", route: "/wms/cycle-counts" },
+      { name: "stock inquiry", route: "/wms/stock-inquiry" },
+      { name: "integration logs", route: "/wms/integration-logs" },
+    ],
+  },
+  {
     name: "docs",
     collapse: [
       {
