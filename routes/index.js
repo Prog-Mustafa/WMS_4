@@ -250,6 +250,23 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "WMS",
+    key: "wms",
+    icon: <Icon fontSize="medium">inventory_2</Icon>,
+    collapse: [
+      { name: "Items", key: "items", route: "/wms/items" },
+      { name: "Purchase Orders", key: "purchase-orders", route: "/wms/purchase-orders" },
+      { name: "Sales Orders", key: "sales-orders", route: "/wms/sales-orders" },
+      { name: "Receiving", key: "receiving", route: "/wms/receiving" },
+      { name: "Deliveries", key: "deliveries", route: "/wms/deliveries" },
+      { name: "Transfers", key: "transfers", route: "/wms/transfers" },
+      { name: "Cycle Counts", key: "cycle-counts", route: "/wms/cycle-counts" },
+      { name: "Stock Inquiry", key: "stock-inquiry", route: "/wms/stock-inquiry" },
+      { name: "Integration Logs", key: "integration-logs", route: "/wms/integration-logs" },
+    ],
+  },
+  {
+    type: "collapse",
     name: "Authentication",
     key: "authentication",
     icon: <Icon fontSize="medium">content_paste</Icon>,
