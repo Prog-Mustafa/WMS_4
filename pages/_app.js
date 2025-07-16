@@ -57,6 +57,7 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "/context";
+import { AuthProvider } from "/context/auth";
 
 // Images
 import favicon from "/assets/images/favicon.png";
@@ -203,15 +204,17 @@ function MyApp({
 }) {
   return (
     <MaterialUIControllerProvider>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="shortcut icon" href={favicon.src} />
-          <link rel="apple-touch-icon" sizes="76x76" href={appleIcon.src} />
-          <title>Next Material Dashboard 2 PRO</title>
-        </Head>
-        <Main Component={Component} pageProps={pageProps} />
-      </CacheProvider>
+      <AuthProvider>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="shortcut icon" href={favicon.src} />
+            <link rel="apple-touch-icon" sizes="76x76" href={appleIcon.src} />
+            <title>Next Material Dashboard 2 PRO</title>
+          </Head>
+          <Main Component={Component} pageProps={pageProps} />
+        </CacheProvider>
+      </AuthProvider>
     </MaterialUIControllerProvider>
   );
 }

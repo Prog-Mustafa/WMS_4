@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
 
@@ -34,6 +35,8 @@ import MDTypography from "/components/MDTypography";
 import MDInput from "/components/MDInput";
 import MDButton from "/components/MDButton";
 
+import { useAuth } from "/context/auth";
+
 // Authentication layout components
 import BasicLayout from "/pagesComponents/authentication/components/BasicLayout";
 
@@ -41,7 +44,22 @@ import BasicLayout from "/pagesComponents/authentication/components/BasicLayout"
 import bgImage from "/assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
+  const { login } = useAuth();
+  const router = useRouter();
   const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      router.push("/dashboards/analytics");
+    } catch (err) {
+      console.error(err);
+      alert("Login failed");
+    }
+  };
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -101,12 +119,24 @@ function Basic() {
           </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox component="form" role="form" onSubmit={handleSubmit}>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -121,7 +151,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="dark" fullWidth>
+              <MDButton type="submit" variant="gradient" color="dark" fullWidth>
                 sign in
               </MDButton>
             </MDBox>

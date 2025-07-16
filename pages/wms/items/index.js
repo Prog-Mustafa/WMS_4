@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 
 import MDBox from "/components/MDBox";
@@ -8,9 +9,27 @@ import DashboardNavbar from "/examples/Navbars/DashboardNavbar";
 import Footer from "/examples/Footer";
 import DataTable from "/examples/Tables/DataTable";
 
-import dataTableData from "/pagesComponents/wms/items/data/dataTableData";
+import columns from "/pagesComponents/wms/items/data/dataTableData";
+import { useAuth } from "/context/auth";
+import { apiFetch } from "/utils/api";
 
 function Items() {
+  const { token } = useAuth();
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    async function fetchItems() {
+      if (!token) return;
+      try {
+        const data = await apiFetch("/items", {}, token);
+        setRows(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchItems();
+  }, [token]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -21,7 +40,7 @@ function Items() {
               Items
             </MDTypography>
           </MDBox>
-          <DataTable table={dataTableData} canSearch />
+          <DataTable table={{ columns, rows }} canSearch />
         </Card>
       </MDBox>
       <Footer />
