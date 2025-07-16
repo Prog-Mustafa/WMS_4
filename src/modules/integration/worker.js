@@ -4,7 +4,12 @@ const { IntegrationQueue, IntegrationLog } = require('../../models');
 const sapService = require('../sap/sapService');
 require('dotenv').config();
 
-const connection = new Redis({ host: process.env.REDIS_HOST, port: process.env.REDIS_PORT });
+const connection = new Redis({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  username: process.env.REDIS_USER,
+  password: process.env.REDIS_PASSWORD,
+});
 
 const worker = new Worker('integration', async job => {
   const record = await IntegrationQueue.findByPk(job.data.id);
